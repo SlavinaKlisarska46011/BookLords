@@ -20,7 +20,8 @@
 			<c:if test="${ not empty loginAgain}">
 				<h3 style="color: red">Invalid username or password!</h3>
 			</c:if>
-			<form:form commandName="user">
+			<%--@elvariable id="user" type="java"--%>
+			<form:form modelAttribute="user">
 				<form:errors path="*" cssClass="errorblock" element="div" />
 				<br>
 				<div>
@@ -38,7 +39,7 @@
 				<div>
 					<input type="submit" value="Log in" />
 					<!--  <a href="#">Lost your password?</a> -->
-					<a href="http://localhost:8080/BookLords/Register">Register</a>
+					<a href="http://localhost:8080/Register">Register</a>
 				</div>
 			</form:form>
 		</section>

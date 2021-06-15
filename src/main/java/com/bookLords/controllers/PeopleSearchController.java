@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,12 +26,12 @@ public class PeopleSearchController implements ILogin {
 	@Autowired
 	private UserProfileDAO userDao;
 
-	@RequestMapping(value = "/SearchPeople", method = RequestMethod.GET)
+	@GetMapping(value = "/SearchPeople")
 	public String sayHello(Model model, HttpServletRequest request) {
 		return "userVisual";
 	}
 
-	@RequestMapping(value = "/SearchPeopleByName", method = RequestMethod.GET)
+	@GetMapping(value = "/SearchPeopleByName")
 	protected void getUsersByName(@ModelAttribute("loggedUser") User loggedUser, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Set<User> users = new LinkedHashSet<User>();

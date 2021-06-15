@@ -96,7 +96,7 @@
 		msgbox.empty();
 		var password = $("#password").val();
 		var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
-		var url = 'http://localhost:8080/BookLords/Validate?password=' + password;
+		var url = 'http://localhost:8080/Validate?password=' + password;
 		if (regex.test(password)) {
 			$
 					.ajax({

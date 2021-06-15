@@ -56,7 +56,7 @@ public class HomeController implements ILogin {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "redirect:/index";
+            return "redirect:/";
         }
         return "index";
     }

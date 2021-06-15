@@ -36,7 +36,6 @@ public class BookDBDAO implements IBookDBDAO {
 			connection.setAutoCommit(false);
 			for (Book book : books) {
 				if (!containsISBN(book.getISBN())) {
-					System.out.println("Eto sega shte vkaram!");
 					Statement statement = connection.createStatement();
 					String editionLanguage = book.getEditionLanguage();
 					ResultSet resultSet = statement

@@ -19,7 +19,7 @@
 		<header id="header" class="clear">
 			<div id="hgroup">
 				<h1>
-					<a href="http://localhost:8080/BookLords/">BookLords</a>
+					<a href="http://localhost:8080/">BookLords</a>
 				</h1>
 				<h2>Once you learn to read, you will be forever free</h2>
 			</div>
@@ -29,7 +29,7 @@
 					<li><a href="http://localhost:8080/Login">My Books</a></li>
 					<li><a href="http://localhost:8080/Login">Sign
 							in</a></li>
-					<li><a href="http://localhost:8080/BookLords/Register">Sign
+					<li><a href="http://localhost:8080/Register">Sign
 							up</a></li>
 				</ul>
 			</nav>

@@ -37,7 +37,7 @@ h4 {
        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
            <h1><strong> 404 ! </strong> ERROR  </h1>
            <h3>Resource Not Found</h3>
-           <a href="http://localhost:8080/BookLords/" class="btn btn-default btn-lg">  <strong> BACK TO HOME </strong></a>
+           <a href="http://localhost:8080/" class="btn btn-default btn-lg">  <strong> BACK TO HOME </strong></a>
        </div></div>
 </body>
 </html>

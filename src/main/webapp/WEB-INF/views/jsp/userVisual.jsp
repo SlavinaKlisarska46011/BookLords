@@ -49,7 +49,7 @@
 					<c:when test="${ not empty users}">
 
 						<c:forEach items="${users}" var="user">
-							<a href="http://localhost:8080/BookLords/ShowUser?id=${user.id}">
+							<a href="http://localhost:8080/ShowUser?id=${user.id}">
 								<table>
 									<tr>
 										<th></th>

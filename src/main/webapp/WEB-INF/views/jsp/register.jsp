@@ -142,7 +142,7 @@ body {
 		msgbox.empty();
 		var email = $("#email").val();
 		var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-		var url = 'http://localhost:8080/BookLords/Validate?email=' + email;
+		var url = 'http://localhost:8080/Validate?email=' + email;
 		if (regex.test(email)) {
 			$
 					.ajax({
@@ -179,7 +179,8 @@ body {
 <jsp:include page="homeHeader.jsp" />
 	<div class="container">
 		<section id="content">
-			<form:form commandName="user">
+			<%--@elvariable id="user" type="java"--%>
+			<form:form modelAttribute="user">
 				<form:errors path="*" cssClass="errorblock" element="div" />
 				<br>
 				<h1>Sign up</h1>

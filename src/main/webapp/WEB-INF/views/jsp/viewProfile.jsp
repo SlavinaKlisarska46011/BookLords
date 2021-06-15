@@ -35,7 +35,7 @@
 									<strong><b>Name:</b></strong>
 									<c:if test="${ not empty user.name }">
 										<c:out value="${user.name}"></c:out>
-									</c:if><a href="http://localhost:8080/BookLords/Edit">[edit]</a>
+									</c:if><a href="http://localhost:8080/Edit">[edit]</a>
 									<br> <br> <br />
 								</h1>
 								<p>

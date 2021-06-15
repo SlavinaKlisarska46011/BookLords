@@ -87,7 +87,7 @@
 								if (object != null) {
 
 									var container = document.createElement("a");
-									container.href = "http://localhost:8080/BookLords/ShowUser?id="
+									container.href = "http://localhost:8080/ShowUser?id="
 											+ object.id;
 
 									var containerDiv = document

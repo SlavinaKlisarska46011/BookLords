@@ -26,7 +26,7 @@ public class RegisterController implements ILogin{
 
 	@RequestMapping(value = "/Register", method = RequestMethod.GET)
 	public String sayHello(Model model) {
-		model.addAttribute(new User());
+		model.addAttribute("user", new User());
 		return "register";
 	}
 
@@ -36,7 +36,7 @@ public class RegisterController implements ILogin{
 			User registeredUser = registerDAO.registerUser(user);
 			
 			setUserSession(request, registeredUser);
-			return "redirect:/index";
+			return "redirect:/";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "register";

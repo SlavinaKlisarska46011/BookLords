@@ -20,23 +20,23 @@
 		<header id="header" class="clear">
 			<div id="hgroup">
 				<h1>
-					<a href="http://localhost:8080/BookLords/">BookLords</a>
+					<a href="http://localhost:8080/">BookLords</a>
 				</h1>
 				<h2>Once you learn to read, you will be forever free</h2>
 			</div>
 			<nav>
 				<ul>
-					<li><a href="http://localhost:8080/BookLords/">Home</a></li>
+					<li><a href="http://localhost:8080/">Home</a></li>
 					<li class="dropdown"><a style="cursor: pointer;">My Books</a>
 					<c:choose>
 					<c:when test="${sessionScope.loggedUser != null}">
 					<c:set var="user" scope="session" value="${sessionScope.loggedUser}"/>
 					<div class="dropdown-content">
 												<c:forEach items="${user.bookshelves}" var="bookshelf">
-													<a href="http://localhost:8080/BookLords/MyBooks?bookshelfId=${bookshelf.id}"><c:out
+													<a href="http://localhost:8080/MyBooks?bookshelfId=${bookshelf.id}"><c:out
 															value="${bookshelf.name}"/></a>
 												</c:forEach>
-												<a href="http://localhost:8080/BookLords/MyBooks">Add Bookshelf</a>
+												<a href="http://localhost:8080/MyBooks">Add Bookshelf</a>
 											</div>
 											</c:when></c:choose>
 					</li>
@@ -47,8 +47,8 @@
 						</div></li>
 							<li class="dropdown"><a class="dropbtn" style="cursor: pointer;">My Profile</a>
 						<div class="dropdown-content">
-							<a href="http://localhost:8080/BookLords/ViewProfile">View Profile</a>
-							<a href="http://localhost:8080/BookLords/MyComments">My Comments</a> <a href="http://localhost:8080/BookLords/SignOut">Sign Out</a>
+							<a href="http://localhost:8080/ViewProfile">View Profile</a>
+							<a href="http://localhost:8080/MyComments">My Comments</a> <a href="http://localhost:8080/SignOut">Sign Out</a>
 						</div></li>
 				</ul>
 			</nav>

@@ -65,7 +65,8 @@ input.new {
 			<h3 align="right" style="color: red">This bookshelf already
 				exists!</h3><br/><br/>
 		</c:if>
-		<form:form commandName="bookshelf">
+		<%--@elvariable id="bookshelf" type="java"--%>
+		<form:form modelAttribute="bookshelf">
 			<form:errors path="*" cssClass="errorblock" element="div" />
 			<form:input class="beautiful" id="shelf" type="text" path="name"
 				placeholder="Shelf name" />

@@ -115,7 +115,7 @@
 											<td align="center"><c:forEach
 													items="${user.followedPeople}" var="followedPerson">
 													<a
-														href="http://localhost:8080/BookLords/ShowUser?id=${followedPerson.id}"><h1
+														href="http://localhost:8080/ShowUser?id=${followedPerson.id}"><h1
 															style="color: #919191">
 															<strong>&nbsp&nbsp&nbsp&nbsp</strong><br>
 															<c:out value="${followedPerson.name}"></c:out>

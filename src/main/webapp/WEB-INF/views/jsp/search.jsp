@@ -36,7 +36,7 @@
 function sendRequestBookShelf(bookId, bookShelfId) {
 	console.log(bookId);
 	console.log(bookShelfId);
-	var url = "http://localhost:8080/BookLords/AddBookToBookshelf?bookId=" + bookId + "&bookshelfId=" + bookShelfId;
+	var url = "http://localhost:8080/AddBookToBookshelf?bookId=" + bookId + "&bookshelfId=" + bookShelfId;
 
 		$
 				.ajax({

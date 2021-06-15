@@ -110,9 +110,7 @@ public class BookshelvesDAO implements IBookshelvesDAO {
 
 					int bookshelfId = resultSet.getInt(1);
 					int bookshefNameId = resultSet.getInt(2);
-					System.out.println("Eto sega ima" + bookshefNameId + bookshelfId);
 					String bookshelfName = getBookshelfNameById(bookshefNameId);
-					System.out.println(bookshelfName);
 					bookshelves.add(new Bookshelf(bookshelfId, bookshelfName));
 				}
 

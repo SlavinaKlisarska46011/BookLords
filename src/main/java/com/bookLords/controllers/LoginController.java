@@ -27,7 +27,7 @@ public class LoginController implements ILogin {
 
 	@GetMapping(value = "/Login")
 	public String sayHello(Model model) {
-		model.addAttribute(new User());
+		model.addAttribute("user", new User());
 		return "login";
 	}
 
@@ -42,7 +42,7 @@ public class LoginController implements ILogin {
 			}
 			model.addAttribute("user", user);
 			model.addAttribute("loginAgain", "");
-			return "redirect:/index";
+			return "redirect:/";
 		} catch (Exception e) {
 			model.addAttribute("loginAgain", "loginAgain");
 			e.printStackTrace();
@@ -56,9 +56,9 @@ public class LoginController implements ILogin {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
 		} catch (Exception e) {
-			return "redirect:/index";
+			return "redirect:/";
 		}
-		return "redirect:/index";
+		return "redirect:/";
 	}
 
 }

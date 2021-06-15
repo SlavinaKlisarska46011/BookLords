@@ -176,23 +176,23 @@ body {
 												<span class="rating"> <input type="radio"
 													class="rating-input" id="rating-input-1-5" name="rating"
 													value="1"
-													onclick="window.location='http://localhost:8080/BookLords/Login';">
+													onclick="window.location='http://localhost:8080//Login';">
 													<label for="rating-input-1-5" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-4" name="rating" value="2"
-													onclick="window.location='http://localhost:8080/BookLords/Login';">
+													onclick="window.location='http://localhost:8080//Login';">
 													<label for="rating-input-1-4" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-3" name="rating" value="3"
-													onclick="window.location='http://localhost:8080/BookLords/Login';">
+													onclick="window.location='http://localhost:8080//Login';">
 													<label for="rating-input-1-3" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-2" name="rating" value="4"
-													onclick="window.location='http://localhost:8080/BookLords/Login';">
+													onclick="window.location='http://localhost:8080//Login';">
 													<label for="rating-input-1-2" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-1" name="rating" value="5"
-													onclick="window.location='http://localhost:8080/BookLords/Login';">
+													onclick="window.location='http://localhost:8080//Login';">
 													<label for="rating-input-1-1" class="rating-star"></label>
 												</span>
 											</c:otherwise>
@@ -219,7 +219,7 @@ body {
 										<br> <strong>Authors:</strong>
 										<c:forEach items="${book.authors}" var="author">
 											<a
-												href="http://localhost:8080/BookLords/ShowAuthor?id=${author.id}"><c:out
+												href="http://localhost:8080/ShowAuthor?id=${author.id}"><c:out
 													value="${author.name}" /></a>
 										</c:forEach>
 									</p>
@@ -292,7 +292,8 @@ body {
 	<div class="div1" align="center">
 		<c:choose>
 			<c:when test="${sessionScope.loggedUser != null}">
-				<form:form commandName="comment">
+				<%--@elvariable id="comment" type="java"--%>
+				<form:form modelAttribute="comment">
 					<form:errors path="*" cssClass="errorblock" element="div" />
 					<form:textarea type="text" onfocus="clearContents(this);"
 						path="text" name="commentTextArea"
@@ -307,7 +308,7 @@ body {
 				<textarea name="text" placeholder="Ask anything about the book"
 					maxlength="150" cols="63" rows="5"></textarea>
 				<input type="submit" value="Submit"
-					onclick="window.location='http://localhost:8080/BookLords/Login';" />
+					onclick="window.location='http://localhost:8080//Login';" />
 			</c:otherwise>
 		</c:choose>
 		<br>
@@ -325,13 +326,13 @@ body {
 					<c:if test="${loggedUser.id != comment.user.id}">
 						<h2 align='left'>
 							By: <a
-								href="http://localhost:8080/BookLords/ShowUser?id=${comment.user.id}"><c:out
+								href="http://localhost:8080/ShowUser?id=${comment.user.id}"><c:out
 									value="${comment.user.name}"></c:out></a>
 						</h2>
 					</c:if>
 					<c:if test="${loggedUser.id == comment.user.id}">
 						<h2 align='left'>
-							By: <a href="http://localhost:8080/BookLords/ViewProfile"><c:out
+							By: <a href="http://localhost:8080/ViewProfile"><c:out
 									value="${comment.user.name}"></c:out></a>
 						</h2>
 					</c:if>
