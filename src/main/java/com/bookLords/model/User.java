@@ -192,11 +192,11 @@ public class User implements IUser {
         return Collections.unmodifiableList(recommendationsBySlope);
     }
 
-    public void addRecommendationsByContend(List<Book> recommendations) {
+    public void addRecommendationsByContent(List<Book> recommendations) {
         recommendationsByContend.addAll(recommendations);
     }
 
-    public List<Book> getRecommendationsByContend() {
+    public List<Book> getRecommendationsByContent() {
         return Collections.unmodifiableList(recommendationsByContend);
     }
 

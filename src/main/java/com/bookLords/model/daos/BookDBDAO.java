@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class BookDBDAO implements IBookDBDAO {
@@ -250,11 +248,11 @@ public class BookDBDAO implements IBookDBDAO {
         return books;
     }
 
-    public synchronized Set<Book> getBooksByGenreAndAuthor(String genre, Author author) throws BookException {
-        Set<Book> books = new LinkedHashSet<Book>();
+    public synchronized List<Book> getBooksByGenreAndAuthor(String genres, String authors) throws BookException {
+        List<Book> books = new ArrayList<>();
         try {
-            if (genre != null && !genre.equals("")) {
-                if (!(genre.contains("\'") || genre.contains("\""))) {
+            if (genres != null && !genres.equals("")) {
+                if (!(genres.contains("\'") || genres.contains("\""))) {
                     connection = DBConnection.getInstance().getConnection();
                     connection.setAutoCommit(false);
                     Statement statement = connection.createStatement();
@@ -264,7 +262,7 @@ public class BookDBDAO implements IBookDBDAO {
                                     "JOIN authors ON authors.author_id = books_has_authors.author_id " +
                                     "JOIN books_has_genres ON books.book_id = books_has_genres.books_book_id " +
                                     "JOIN genres ON genres.genre_id = books_has_genres.genres_genre_id " +
-                                    "where genres.name = '" + genre + "' and authors.name='" + author.getName() + "';");
+                                    "where genres.name IN ('" + genres + "' and authors.name IN('" +authors + "';");
 
                     if (resultSet.next()) {
                         int genreId = resultSet.getInt("genre_id");
