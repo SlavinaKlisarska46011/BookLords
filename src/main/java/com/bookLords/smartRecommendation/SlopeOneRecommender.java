@@ -1,12 +1,7 @@
-package com.bookLords.ML;
+package com.bookLords.smartRecommendation;
 
-import com.bookLords.model.*;
 import com.bookLords.model.daos.BookDBDAO;
-import com.bookLords.model.exceptions.BookException;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Map;
-import java.util.TreeMap;
 
 public class SlopeOneRecommender {
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -41,7 +42,7 @@ public class HomeController implements ILogin {
             User user = getCurrentUser(request);
             if (user != null) {
                 System.out.println("Ima user");
-                user = userProfileDAO.getUserById(user.getId());
+                user = userProfileDAO.getUserById(user.getId());//TODO move
                 for (User followedPerson : user.getFollowedPeople()) {
                     for (Entry<Integer, Rating> entry : followedPerson.getRatings().entrySet()) {
                         Book book = bookDBDAO.getBookByID(entry.getKey());
@@ -51,7 +52,7 @@ public class HomeController implements ILogin {
                     }
                 }
                 model.addAttribute("user", user);
-                model.addAttribute("books", books);
+                model.addAttribute("books", user.getRecommendations());
                 return "userHome";
             }
         } catch (Exception e) {

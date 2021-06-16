@@ -4,6 +4,7 @@ import com.bookLords.model.exceptions.AuthorException;
 import com.bookLords.model.exceptions.InvalidDataException;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 public class Author {
@@ -106,4 +107,16 @@ public class Author {
 				+ ", biography=" + biography + ", genre=" + genre + "]";
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Author author = (Author) o;
+		return id == author.id && Objects.equals(name, author.name) && Objects.equals(imageURL, author.imageURL) && Objects.equals(born, author.born) && Objects.equals(died, author.died) && Objects.equals(biography, author.biography) && Objects.equals(genre, author.genre);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, imageURL, born, died, biography, genre);
+	}
 }
