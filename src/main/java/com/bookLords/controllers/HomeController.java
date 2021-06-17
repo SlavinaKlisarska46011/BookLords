@@ -7,6 +7,7 @@ import com.bookLords.model.daos.BookDBDAO;
 import com.bookLords.model.daos.QuotesDBDAO;
 import com.bookLords.model.daos.UserProfileDAO;
 import com.bookLords.model.interfaces.ILogin;
+import com.bookLords.smartRecommendation.SelectRecommender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,9 @@ public class HomeController implements ILogin {
         this.bookDBDAO = bookDBDAO;
     }
 
+    @Autowired
+    SelectRecommender selectRecommender;
+
     @RequestMapping(method = RequestMethod.GET)
     public String sayHello(Model model, HttpServletRequest request) {
         try {
@@ -52,7 +56,7 @@ public class HomeController implements ILogin {
                     }
                 }
                 model.addAttribute("user", user);
-                model.addAttribute("books", user.getRecommendations());
+                model.addAttribute("books", selectRecommender.selectRecommender(user).recommend(user));
                 return "userHome";
             }
         } catch (Exception e) {

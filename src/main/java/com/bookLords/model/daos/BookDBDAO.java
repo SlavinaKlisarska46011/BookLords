@@ -167,13 +167,6 @@ public class BookDBDAO implements IBookDBDAO {
 
         } finally {
         }
-        // } finally {
-        // try {
-        // connection.close();
-        // } catch (SQLException e) {
-        // e.printStackTrace();
-        // }
-        // }
         return null;
     }
 
@@ -400,4 +393,22 @@ public class BookDBDAO implements IBookDBDAO {
         resultSet.next();
         return resultSet.getInt("book_id");
     }
+
+    public synchronized List<Book> getAllBooks() throws BookException {
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT book_id FROM books;");
+                List<Book> books = new ArrayList<>();
+                while (rs.next()) {
+                    int bookId = rs.getInt("book_id");
+                    books.add(getBookByID(bookId));
+                }
+                return books;
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new BookException();
+            }
+        }
+
+
 }

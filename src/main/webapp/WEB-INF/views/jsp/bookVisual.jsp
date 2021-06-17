@@ -8,10 +8,10 @@
 <head>
 <title>Booklords</title>
 <meta charset="iso-8859-1">
-<link rel="stylesheet" href="css/styles/layout.css" type="text/css">
-<link rel="stylesheet" href="css/publicButton.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="css/styles.css" />
-<link rel="stylesheet" type="text/css" href="css/stars.css" />
+<link rel="stylesheet" href="../../../static/css/styles/layout.css" type="text/css">
+<link rel="stylesheet" href="../../../static/css/publicButton.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="../../../static/css/styles.css" />
+<link rel="stylesheet" type="text/css" href="../../../static/css/stars.css" />
 
 
 <style type="text/css">
@@ -78,10 +78,8 @@
 }
 
 #commentImg:hover {
-	filter: alpha(opacity = 70);
+	filter: alpha(opacity=70);
 	opacity: 0.7;
-	opacity: 0.7; . rating { overflow : hidden;
-	display: inline-block;
 }
 body {
 	margin: 40px;
@@ -152,11 +150,11 @@ body {
 												<span class="rating"> <input type="radio"
 													class="rating-input" id="rating-input-1-5" name="rating"
 													value="1"
-													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=5';">
+													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=1';">
 													<label for="rating-input-1-5" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-4" name="rating" value="2"
-													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=4';">
+													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=2';">
 													<label for="rating-input-1-4" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-3" name="rating" value="3"
@@ -164,38 +162,14 @@ body {
 													<label for="rating-input-1-3" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-2" name="rating" value="4"
-													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=2';">
+													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=4';">
 													<label for="rating-input-1-2" class="rating-star"></label>
 													<input type="radio" class="rating-input"
 													id="rating-input-1-1" name="rating" value="5"
-													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=1';">
+													onclick="window.location='http://localhost:8080/ShowBook?id=${book.bookId}&rating=5';">
 													<label for="rating-input-1-1" class="rating-star"></label>
 												</span>
 											</c:when>
-											<c:otherwise>
-												<span class="rating"> <input type="radio"
-													class="rating-input" id="rating-input-1-5" name="rating"
-													value="1"
-													onclick="window.location='http://localhost:8080//Login';">
-													<label for="rating-input-1-5" class="rating-star"></label>
-													<input type="radio" class="rating-input"
-													id="rating-input-1-4" name="rating" value="2"
-													onclick="window.location='http://localhost:8080//Login';">
-													<label for="rating-input-1-4" class="rating-star"></label>
-													<input type="radio" class="rating-input"
-													id="rating-input-1-3" name="rating" value="3"
-													onclick="window.location='http://localhost:8080//Login';">
-													<label for="rating-input-1-3" class="rating-star"></label>
-													<input type="radio" class="rating-input"
-													id="rating-input-1-2" name="rating" value="4"
-													onclick="window.location='http://localhost:8080//Login';">
-													<label for="rating-input-1-2" class="rating-star"></label>
-													<input type="radio" class="rating-input"
-													id="rating-input-1-1" name="rating" value="5"
-													onclick="window.location='http://localhost:8080//Login';">
-													<label for="rating-input-1-1" class="rating-star"></label>
-												</span>
-											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
 								</c:choose></td>
@@ -251,9 +225,11 @@ body {
 									<br>
 									<c:if test="${not empty book.readOnlineURL}">
 										<c:if test="${book.readOnlineURL != 'none'}">
-											<a href="${book.readOnlineURL}"><h3>
+											<a href="${book.readOnlineURL}"/>
+								<h3>
 													<span class="label label-default">Read online</span>
-												</h3></a>
+												</h3>
+								</a>
 										</c:if>
 										<c:if test="${book.readOnlineURL == 'none'}">
 											<a href="${book.readOnlineURL}" class="not-active"><h3>
@@ -267,7 +243,7 @@ body {
 									<br>
 									<c:if test="${not empty book.buyOnlineURL}">
 										<c:if test="${book.buyOnlineURL != 'none'}">
-											<a href="${book.buyOnlineURL}"><h3>
+											<a href="${book.buyOnlineURL}"/><h3>
 													<span class="label label-default">Buy online</span>
 												</h3></a>
 										</c:if>
