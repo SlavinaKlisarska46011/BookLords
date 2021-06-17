@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class SlopeOneRecommender {
+public class SlopeOneRecommender implements Recommender {
 
     @Autowired
     BookDBDAO bookDBDAO;
@@ -24,12 +27,21 @@ public class SlopeOneRecommender {
     private static Map<User, HashMap<Book, Double>> inputData;
     private static Map<User, HashMap<Book, Double>> outputData = new HashMap<>();
 
-    public Map<User, HashMap<Book, Double>> slopeOne(int numberOfUsers) throws BookException {
+    public List<Book> recommend(User user) throws BookException {
         inputData = userRatingsDao.getAllUsersRatings();
         System.out.println("Slope One - Before the Prediction\n");
         buildDifferencesMatrix(inputData);
         System.out.println("\nSlope One - With Predictions\n");
-        return predict(inputData);
+        Map<User, HashMap<Book, Double>> predict = predict(inputData);
+
+        return filterAndOrderForUser(user, predict);
+    }
+
+    private List<Book> filterAndOrderForUser(User user, Map<User, HashMap<Book, Double>> predict) {
+        return predict.get(user).entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     private static void buildDifferencesMatrix(Map<User, HashMap<Book, Double>> data) {
@@ -42,11 +54,11 @@ public class SlopeOneRecommender {
                 for (Map.Entry<Book, Double> bookRating2 : userRatings.entrySet()) {
                     int oldCount = 0;
                     if (freq.get(bookRating2.getKey()).containsKey(bookRating2.getKey())) {
-                        oldCount = freq.get(bookRating2.getKey()).get(bookRating2.getKey());
+                        oldCount = freq.get(bookRating2.getKey()).get(bookRating2.getKey()).intValue();
                     }
                     double oldDiff = 0.0;
                     if (diff.get(bookRating2.getKey()).containsKey(bookRating2.getKey())) {
-                        oldDiff = diff.get(bookRating2.getKey()).get(bookRating2.getKey());
+                        oldDiff = diff.get(bookRating2.getKey()).get(bookRating2.getKey()).doubleValue();
                     }
                     double observedDiff = bookRating2.getValue() - bookRating2.getValue();
                     freq.get(bookRating2.getKey()).put(bookRating2.getKey(), oldCount + 1);
@@ -68,8 +80,7 @@ public class SlopeOneRecommender {
      * Based on existing data predict all missing ratings. If prediction is not
      * possible, the value will be equal to -1
      *
-     * @param data
-     *            existing user data and their books' ratings
+     * @param data existing user data and their books' ratings
      * @return
      */
     private Map<User, HashMap<Book, Double>> predict(Map<User, HashMap<Book, Double>> data) throws BookException {
@@ -91,7 +102,7 @@ public class SlopeOneRecommender {
                     }
                 }
             }
-            HashMap<Book, Double> clean = new HashMap<Book, Double>();
+            HashMap<Book, Double> clean = new HashMap<>();
             for (Book j : uPred.keySet()) {
                 if (uFreq.get(j) > 0) {
                     clean.put(j, uPred.get(j).doubleValue() / uFreq.get(j).intValue());

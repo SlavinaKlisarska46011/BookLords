@@ -1,4 +1,4 @@
-package com.bookLords.smartRecommendation;
+package com.bookLords.model.smartRecommendation;
 
 import com.bookLords.model.Book;
 import com.bookLords.model.User;

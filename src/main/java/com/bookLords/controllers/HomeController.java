@@ -7,7 +7,7 @@ import com.bookLords.model.daos.BookDBDAO;
 import com.bookLords.model.daos.QuotesDBDAO;
 import com.bookLords.model.daos.UserProfileDAO;
 import com.bookLords.model.interfaces.ILogin;
-import com.bookLords.smartRecommendation.SelectRecommender;
+import com.bookLords.model.smartRecommendation.SelectRecommender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 

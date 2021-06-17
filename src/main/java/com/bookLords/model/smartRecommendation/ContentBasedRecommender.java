@@ -1,26 +1,22 @@
 package com.bookLords.model.smartRecommendation;
 
-import com.bookLords.model.Author;
-import com.bookLords.model.Book;
-import com.bookLords.model.Rating;
-import com.bookLords.model.User;
+import com.bookLords.model.*;
 import com.bookLords.model.daos.BookDBDAO;
 import com.bookLords.model.exceptions.BookException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ContentBasedRecommender {
+public class ContentBasedRecommender implements Recommender {
 
     @Autowired
     BookDBDAO bookDBDAO;
 
-    public void recommend(User user) throws BookException {
+    @Override
+    public List<Book> recommend(User user) throws BookException {
         Map<String, Integer> allUserGenres = new HashMap<>();
         Map<Author, Integer> allUserAuthors = new HashMap<>();
 
@@ -28,7 +24,7 @@ public class ContentBasedRecommender {
         String sortedFaveGenres = sortByValue(allUserGenres);
         String sortedFaveAuthors = sortByValueAuthors(allUserAuthors);
 
-        user.addRecommendationsByContent(bookDBDAO.getBooksByGenreAndAuthor(sortedFaveGenres, sortedFaveAuthors));
+        return bookDBDAO.getBooksByGenreAndAuthor(sortedFaveGenres, sortedFaveAuthors);
     }
 
 
@@ -70,4 +66,5 @@ public class ContentBasedRecommender {
                 .collect(Collectors.joining("','"));
 
     }
+
 }
