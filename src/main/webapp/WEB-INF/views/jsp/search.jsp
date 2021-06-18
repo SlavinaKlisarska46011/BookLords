@@ -5,56 +5,36 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<title>Booklords</title>
-<meta charset="iso-8859-1">
-<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" type="text/css" href="css/styles.css" />
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<title>Booklords</title>
+	<meta charset="iso-8859-1">
+	<!--[if lt IE 9]>
+	<script src="scripts/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 
 
-<style>
-.center {
-	margin: top 20%;
-	width: 15%;
-	height: 50px;
-	border: 3px solid #919191;
-	padding: 1px;
-	font-size: 20px;
-	color: black;
-	background-color: #919191;
-	text-align: center;
-}
+	<style>
+		.center {
+			margin: top 20%;
+			width: 15%;
+			height: 50px;
+			border: 3px solid #919191;
+			padding: 1px;
+			font-size: 20px;
+			color: black;
+			background-color: #919191;
+			text-align: center;
+		}
 
-.locked {
-   pointer-events: none;
-   cursor: default;
-}
-</style>
-<script type="text/javascript">
-	
-	
-function sendRequestBookShelf(bookId, bookShelfId) {
-	console.log(bookId);
-	console.log(bookShelfId);
-	var url = "http://localhost:8080/AddBookToBookshelf?bookId=" + bookId + "&bookshelfId=" + bookShelfId;
-
-		$
-				.ajax({
-					url : url,
-					type : "GET",
-					complete : function(jqXHR) {
-						if (jqXHR.status == 200) {
-							console.log(jqXHR.status);
-						}
-					}
-
-				});
-}
-	
-</script>
+		.locked {
+			pointer-events: none;
+			cursor: default;
+		}
+	</style>
+	<%@ include file="bookshelfReq.jspf" %>
 </head>
 <body>
-	<c:choose>
+<c:choose>
 		<c:when test="${sessionScope.loggedUser != null}">
 			<div><jsp:include page="logedHeader.jsp" /></div>
 		</c:when>
@@ -94,8 +74,7 @@ function sendRequestBookShelf(bookId, bookShelfId) {
 									</tr>
 									<tr>
 										<td><img alt="Book Poster"
-											src='<c:url value="${book.posterURL}"></c:url>' width="130"
-								height="200"></td>
+											src='<c:url value="${book.posterURL}"></c:url>' width="130" height="200"></td>
 										<td>
 											<h1 style="color: #919191">
 												<strong>&nbsp&nbsp&nbsp&nbspTitle:</strong>

@@ -1,0 +1,22 @@
+<script type="text/javascript">
+
+
+    function sendRequestBookShelf(bookId, bookShelfId) {
+        console.log(bookId);
+        console.log(bookShelfId);
+        var url = "http://localhost:8080/AddBookToBookshelf?bookId=" + bookId + "&bookshelfId=" + bookShelfId;
+
+        $
+            .ajax({
+                url : url,
+                type : "GET",
+                complete : function(jqXHR) {
+                    if (jqXHR.status == 200) {
+                        console.log(jqXHR.status);
+                    }
+                }
+
+            });
+    }
+
+</script>
