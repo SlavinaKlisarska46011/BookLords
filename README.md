@@ -1,0 +1,17 @@
+BookLords - site for readers and book recommendations. Find and share books you love. 
+
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Home_page.png?raw=true "Home_page")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Search_books_page.png?raw=true "Search_books_page")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Login_page.png?raw=true "Login_page")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Register_page.png?raw=true "Register_page")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Register_page_2.png?raw=true "Register_page_2")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/View_my_profile.png?raw=true "View_my_profile")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Edit_my_profile.png?raw=true "Edit_my_profile")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Search_people.png?raw=true "Search_people")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/View_user_profile.png?raw=true "View_user_profile")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Add_books_to_my_bookshelves.png?raw=true "Add_books_to_my_bookshelves")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/My_bookshelf_READ.png?raw=true "My_bookshelf_READ")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/View_book.png?raw=true "View_book")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Rate_book.png?raw=true "Rate_book")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/Write_a_comment.png?raw=true "Write_a_comment")
+![Alt text](BookLords/src/main/webapp/static/images/site_screenshots/My_comments.png?raw=true "My_comments")
