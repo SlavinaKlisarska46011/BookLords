@@ -350,15 +350,10 @@ public class BookDBDAO implements IBookDBDAO {
             ResultSet rs = statement.executeQuery("SELECT* FROM authors where author_id=\'" + authorId + "\';");
             if (rs.next()) {
                 String name = rs.getString("name");
-                System.out.println(name);
                 String posterURL = rs.getString("poster_url");
-                System.out.println(posterURL);
                 String born = rs.getString("born_where_and_when");
-                System.out.println(born);
                 String died = rs.getString("died");
-                System.out.println(died);
                 String biography = rs.getString("biography");
-                System.out.println(biography);
                 return new Author(authorId, name, posterURL, born, died, biography);
             }
         } catch (SQLException | InvalidDataException | AuthorException e) {

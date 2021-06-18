@@ -31,16 +31,11 @@ public class CommentsDAO implements ICommentsDAO{
 			PreparedStatement ps = connection.prepareStatement(INSERT_INTO_COMMENTS, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, comment.getText());
 			ps.setInt(2, comment.getUser().getId());
-			System.out.println(comment.getUser().getId());
 			ps.setInt(3, comment.getBookId());
-			System.out.println(comment.getBookId());
 			ps.setString(4, comment.getDate());
-			System.out.println(comment.getDate());
 			ps.executeUpdate();
 			ResultSet resultSet = ps.getGeneratedKeys();
-			if (resultSet.next()) {
-				System.out.println(resultSet.getInt(1));
-			}
+
 			return resultSet.getInt(1);
 		} catch (
 

@@ -119,8 +119,6 @@ public class UserProfileDAO implements IUserProfileDAO{
 		try {
 			preparedStatement = connection.prepareStatement("INSERT INTO followers VALUES(?,?)");
 
-			System.out.println("Az" + follower);
-			System.out.println("Shte followna " + userId);
 			preparedStatement.setInt(1, userId);
 			preparedStatement.setInt(2, follower);
 			preparedStatement.executeUpdate();
@@ -141,7 +139,6 @@ public class UserProfileDAO implements IUserProfileDAO{
 			while (resultSet.next()) {
 				int followedUserId = resultSet.getInt(1);
 				User user = getUserInfoById(followedUserId);
-				System.out.println(user);
 				followingPeople.add(user);
 			}
 			return followingPeople;
@@ -162,7 +159,6 @@ public class UserProfileDAO implements IUserProfileDAO{
 			while (resultSet.next()) {
 				int follower = resultSet.getInt(2);
 				User user = getUserInfoById(follower);
-				System.out.println("follower" + user);
 				followers.add(user);
 			}
 			return followers;
@@ -177,12 +173,10 @@ public class UserProfileDAO implements IUserProfileDAO{
 		try {
 			preparedStatement = connection
 					.prepareStatement("delete from followers where being_followed = ? AND follower = ?");
-			System.out.println("Ae chao " + unfollowUserId);
-			System.out.println("Az" + id);
+
 			preparedStatement.setInt(1, unfollowUserId);
 			preparedStatement.setInt(2, id);
 			preparedStatement.executeUpdate();
-			System.out.println("KRAI");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new UserException();

@@ -37,7 +37,7 @@ public class SearchController implements ILogin {
 	@GetMapping(value = "/Search")
 	protected void getBooksByPrefix(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Set<Book> books = new LinkedHashSet<Book>();
+		Set<Book> books;
 		try {
 			response.setContentType("text/json");
 			response.setCharacterEncoding("UTF-8");
@@ -53,7 +53,7 @@ public class SearchController implements ILogin {
 
 	@GetMapping(value = "/search")
 	public String searchBooksInDB(Model model, HttpServletRequest request) {
-		Set<Book> books = new LinkedHashSet<Book>();
+		Set<Book> books;
 		try {
 			String search = request.getParameter("search");
 			String searchBy = request.getParameter("searchBy");
@@ -67,7 +67,6 @@ public class SearchController implements ILogin {
 					books = dbDao.getBooksByGenre(search);
 					break;
 				default:
-					searchBy = "title";
 					books = dbDao.getBooksByTitle(search);
 					break;
 				}

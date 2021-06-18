@@ -54,19 +54,14 @@ public class GetAUserController implements ILogin {
 				switch (request.getParameter("followOrUnfollow")) {
 				case "follow":
 					userDao.follow(loggedUser.getId(), followOrUnfollowUserId);
-					System.out.println(user.getFollowers().add(loggedUser));
-					for(User usera : user.getFollowers()){
-					System.out.println("Followva me : "+usera.getName());
-					}
+
 					model.addAttribute("followedUser", "followed");
 					break;
 
 				case "unfollow":
 					userDao.unfollow(loggedUser.getId(), followOrUnfollowUserId);
-				System.out.println(	user.getFollowers().remove(loggedUser));
-					for(User usera : user.getFollowers()){
-						System.out.println("NE Followva me : "+usera.getName());
-						}
+				user.getFollowers().remove(loggedUser);
+
 					break;
 				}
 			}

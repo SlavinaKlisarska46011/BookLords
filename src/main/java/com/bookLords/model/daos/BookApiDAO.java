@@ -52,7 +52,6 @@ public class BookApiDAO implements IBookApiDAO{
 			JsonArray jsonArray = object.get("items").getAsJsonArray();
 			for (int i = 0; i < jsonArray.size(); i++) {
 				JsonObject book = (JsonObject) jsonArray.get(i).getAsJsonObject();
-				// System.out.println(book);
 				JsonObject bookVolumeInfo = book.get("volumeInfo").getAsJsonObject();
 				String title = checkIfElementExists(bookVolumeInfo, "title");
 				JsonArray bookAuthors;
@@ -109,9 +108,7 @@ public class BookApiDAO implements IBookApiDAO{
 						smallImage, language, readOnlineURL, buyOnlineURL));
 
 			}
-			for (Book book : books) {
-				System.out.println(book);
-			}
+
 			dao.addBooks(books);
 
 			return books;

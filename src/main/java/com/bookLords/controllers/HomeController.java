@@ -44,7 +44,6 @@ public class HomeController implements ILogin {
             Map<Book, Double> books = new HashMap<Book, Double>();
             User user = getCurrentUser(request);
             if (user != null) {
-                System.out.println("Ima user");
                 user = userProfileDAO.getUserById(user.getId());//TODO move
                 for (User followedPerson : user.getFollowedPeople()) {
                     for (Entry<Integer, Rating> entry : followedPerson.getRatings().entrySet()) {

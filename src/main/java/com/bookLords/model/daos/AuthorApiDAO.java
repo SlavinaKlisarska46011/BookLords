@@ -61,12 +61,10 @@ public class AuthorApiDAO implements IAuthorApiDAO{
 				Element element = (Element) nNode;
 
 				String authorName = element.getElementsByTagName("name").item(0).getTextContent();
-				System.out.println(authorName);
 				String imgURL = element.getElementsByTagName("image_url").item(0).getTextContent();
 				String biography = element.getElementsByTagName("about").item(0).getTextContent();
 				String born = "in " + element.getElementsByTagName("hometown").item(0).getTextContent();
 				born += "\n" + element.getElementsByTagName("born_at").item(0).getTextContent();
-				System.out.println(born);
 				String died = element.getElementsByTagName("died_at").item(0).getTextContent();
 
 				PreparedStatement ps = connection.prepareStatement("INSERT INTO authors VALUES(null, ?, ?, ?, ?, ?)",

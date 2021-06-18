@@ -6,6 +6,7 @@ import com.bookLords.model.daos.BookDBDAO;
 import com.bookLords.model.daos.UserRatingsDao;
 import com.bookLords.model.exceptions.BookException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class SlopeOneRecommender implements Recommender {
 
     @Autowired
@@ -73,7 +75,7 @@ public class SlopeOneRecommender implements Recommender {
                 diff.get(j).put(i, oldValue / count);
             }
         }
-        printData(data);
+//        printData(data);
     }
 
     /**
@@ -117,7 +119,7 @@ public class SlopeOneRecommender implements Recommender {
             }
             outputData.put(e.getKey(), clean);
         }
-        printData(outputData);
+//        printData(outputData);
 
         return outputData;
     }
