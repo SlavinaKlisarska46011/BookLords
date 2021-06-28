@@ -6,6 +6,7 @@ import com.bookLords.model.exceptions.RatingException;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Book {
@@ -197,4 +198,16 @@ public class Book {
 				+ ", setting=" + setting + "]";
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Book book = (Book) o;
+		return bookId == book.bookId && pages == book.pages && Objects.equals(title, book.title) && Objects.equals(authors, book.authors) && Objects.equals(ISBN, book.ISBN) && Objects.equals(editionLanguage, book.editionLanguage) && Objects.equals(genres, book.genres);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(bookId, title, authors, ISBN, pages, editionLanguage, genres);
+	}
 }

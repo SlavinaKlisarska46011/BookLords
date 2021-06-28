@@ -41,10 +41,11 @@ public class HomeController implements ILogin {
         try {
 //            String quote = quotesDBDAO.getQuoteOfTheDay();
 //            model.addAttribute("quote", quote);
-            Map<Book, Double> books = new HashMap<Book, Double>();
+            Map<Book, Double> books = new HashMap<>();
             User user = getCurrentUser(request);
             if (user != null) {
-                user = userProfileDAO.getUserById(user.getId());//TODO move
+                int userId = user.getId();
+                user = userProfileDAO.getUserById(userId);//TODO move
                 for (User followedPerson : user.getFollowedPeople()) {
                     for (Entry<Integer, Rating> entry : followedPerson.getRatings().entrySet()) {
                         Book book = bookDBDAO.getBookByID(entry.getKey());

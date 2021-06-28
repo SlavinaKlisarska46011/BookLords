@@ -23,17 +23,9 @@ public class SelectRecommender {
         Set<Book> userBooks = new HashSet<>();
         if (!userBookshelves.isEmpty()) {
             for (Bookshelf bookshelf : userBookshelves) {
-                Map<Book, String> books = bookshelf.getBooks();
-                if (!books.isEmpty()) {
-                    for (Book book : books.keySet()) {
-                        userBooks.add(book);
-                    }
-                }
-            }
-            if (!userBooks.isEmpty()) {
-                return contentBasedRecommender;
+                userBooks.addAll(bookshelf.getBooks().keySet());
             }
         }
-        return slopeOneRecommender;
+        return !userBooks.isEmpty() ? contentBasedRecommender : slopeOneRecommender;
     }
 }

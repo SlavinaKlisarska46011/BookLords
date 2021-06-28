@@ -8,6 +8,7 @@ import com.bookLords.model.exceptions.BookException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Comparator;
@@ -26,56 +27,73 @@ public class SlopeOneRecommender implements Recommender {
 
     private static Map<Book, Map<Book, Double>> diff = new HashMap<>();
     private static Map<Book, Map<Book, Integer>> freq = new HashMap<>();
-    private static Map<User, HashMap<Book, Double>> inputData;
-    private static Map<User, HashMap<Book, Double>> outputData = new HashMap<>();
+    private static Map<Integer, HashMap<Book, Double>> inputData;
+    private static Map<Integer, HashMap<Book, Double>> outputData = new HashMap<>();
+    private static Map<Integer, List<Book>> outputDataCash = new HashMap<>();
 
-    public List<Book> recommend(User user) throws BookException {
+    @PostConstruct
+    public void init() throws BookException {
         inputData = userRatingsDao.getAllUsersRatings();
         System.out.println("Slope One - Before the Prediction\n");
         buildDifferencesMatrix(inputData);
         System.out.println("\nSlope One - With Predictions\n");
-        Map<User, HashMap<Book, Double>> predict = predict(inputData);
-
-        return filterAndOrderForUser(user, predict);
+        Map<Integer, HashMap<Book, Double>> predict = predict(inputData);
+        fillCash(predict);
     }
 
-    private List<Book> filterAndOrderForUser(User user, Map<User, HashMap<Book, Double>> predict) {
-        return predict.get(user).entrySet().stream()
+    public List<Book> recommend(User user) throws BookException {
+        if (outputDataCash.containsKey(user.getId())){
+            return outputDataCash.get(user.getId());
+        }
+        init();
+        return outputDataCash.get(user.getId());
+    }
+
+    private void fillCash(Map<Integer, HashMap<Book, Double>> predict) {
+        for (Map.Entry<Integer, HashMap<Book,Double>> entry : predict.entrySet()){
+            outputDataCash.put(entry.getKey(), filterAndOrderForUser(entry.getKey(), predict));
+        }
+    }
+
+    private List<Book> filterAndOrderForUser(int userId, Map<Integer, HashMap<Book, Double>> predict) {
+        return predict.get(userId).entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
 
-    private static void buildDifferencesMatrix(Map<User, HashMap<Book, Double>> data) {
+    private static void buildDifferencesMatrix(Map<Integer, HashMap<Book, Double>> data) {
         for (HashMap<Book, Double> userRatings : data.values()) {
             for (Map.Entry<Book, Double> bookRating : userRatings.entrySet()) {
-                if (!diff.containsKey(bookRating.getKey())) { //contains book
-                    diff.put(bookRating.getKey(), new HashMap<>());
-                    freq.put(bookRating.getKey(), new HashMap<>());
+                Book ratingKey = bookRating.getKey();
+                if (!diff.containsKey(ratingKey)) { //contains book
+                    diff.put(ratingKey, new HashMap<>());
+                    freq.put(ratingKey, new HashMap<>());
                 }
                 for (Map.Entry<Book, Double> bookRating2 : userRatings.entrySet()) {
                     int oldCount = 0;
-                    if (freq.get(bookRating2.getKey()).containsKey(bookRating2.getKey())) {
-                        oldCount = freq.get(bookRating2.getKey()).get(bookRating2.getKey()).intValue();
+                    Book rating2Key = bookRating2.getKey();
+                    if (freq.get(ratingKey).containsKey(rating2Key)) {
+                        oldCount = freq.get(ratingKey).get(rating2Key);
                     }
                     double oldDiff = 0.0;
-                    if (diff.get(bookRating2.getKey()).containsKey(bookRating2.getKey())) {
-                        oldDiff = diff.get(bookRating2.getKey()).get(bookRating2.getKey()).doubleValue();
+                    if (diff.get(ratingKey).containsKey(rating2Key)) {
+                        oldDiff = diff.get(ratingKey).get(rating2Key);
                     }
-                    double observedDiff = bookRating2.getValue() - bookRating2.getValue();
-                    freq.get(bookRating2.getKey()).put(bookRating2.getKey(), oldCount + 1);
-                    diff.get(bookRating2.getKey()).put(bookRating2.getKey(), oldDiff + observedDiff);
+                    double observedDiff = bookRating.getValue() - bookRating2.getValue();
+                    freq.get(ratingKey).put(rating2Key, oldCount + 1);
+                    diff.get(ratingKey).put(rating2Key, oldDiff + observedDiff);
                 }
             }
         }
         for (Book j : diff.keySet()) {
             for (Book i : diff.get(j).keySet()) {
-                double oldValue = diff.get(j).get(i).doubleValue();
-                int count = freq.get(j).get(i).intValue();
+                double oldValue = diff.get(j).get(i);
+                int count = freq.get(j).get(i);
                 diff.get(j).put(i, oldValue / count);
             }
         }
-//        printData(data);
+        printData(data);
     }
 
     /**
@@ -85,14 +103,14 @@ public class SlopeOneRecommender implements Recommender {
      * @param data existing user data and their books' ratings
      * @return
      */
-    private Map<User, HashMap<Book, Double>> predict(Map<User, HashMap<Book, Double>> data) throws BookException {
+    private Map<Integer, HashMap<Book, Double>> predict(Map<Integer, HashMap<Book, Double>> data) throws BookException {
         HashMap<Book, Double> uPred = new HashMap<>();
         HashMap<Book, Integer> uFreq = new HashMap<>();
         for (Book j : diff.keySet()) {
             uFreq.put(j, 0);
             uPred.put(j, 0.0);
         }
-        for (Map.Entry<User, HashMap<Book, Double>> e : data.entrySet()) {
+        for (Map.Entry<Integer, HashMap<Book, Double>> e : data.entrySet()) {
             for (Book j : e.getValue().keySet()) {
                 for (Book k : diff.keySet()) {
                     try {
@@ -119,15 +137,15 @@ public class SlopeOneRecommender implements Recommender {
             }
             outputData.put(e.getKey(), clean);
         }
-//        printData(outputData);
+        printData(outputData);
 
         return outputData;
     }
 
-    private static void printData(Map<User, HashMap<Book, Double>> data) {
-        for (User user : data.keySet()) {
-            System.out.println(user.getName() + ":");
-            print(data.get(user));
+    private static void printData(Map<Integer, HashMap<Book, Double>> data) {
+        for (Integer userId : data.keySet()) {
+            System.out.println(userId + ":");
+            print(data.get(userId));
         }
     }
 
