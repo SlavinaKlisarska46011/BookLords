@@ -15,21 +15,21 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
-public class SlopeOneRecommender implements Recommender {
+public class SlopeOneRecommender extends Recommender {
 
     @Autowired
     BookDBDAO bookDBDAO;
     @Autowired
     UserRatingsDao userRatingsDao;
 
-    private static Map<Book, Map<Book, Double>> diff = new HashMap<>();
-    private static Map<Book, Map<Book, Integer>> freq = new HashMap<>();
-    private static Map<Integer, HashMap<Book, Double>> inputData;
-    private static Map<Integer, HashMap<Book, Double>> outputData = new HashMap<>();
-    private static Map<Integer, List<Book>> outputDataCash = new HashMap<>();
+    private static ConcurrentHashMap<Book, Map<Book, Double>> diff = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Book, Map<Book, Integer>> freq = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Integer, HashMap<Book, Double>> inputData;
+    private static ConcurrentHashMap<Integer, HashMap<Book, Double>> outputData = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void init() throws BookException {
@@ -41,17 +41,9 @@ public class SlopeOneRecommender implements Recommender {
         fillCash(predict);
     }
 
-    public List<Book> recommend(User user) throws BookException {
-        if (outputDataCash.containsKey(user.getId())){
-            return outputDataCash.get(user.getId());
-        }
-        init();
-        return outputDataCash.get(user.getId());
-    }
-
     private void fillCash(Map<Integer, HashMap<Book, Double>> predict) {
         for (Map.Entry<Integer, HashMap<Book,Double>> entry : predict.entrySet()){
-            outputDataCash.put(entry.getKey(), filterAndOrderForUser(entry.getKey(), predict));
+            addToCash(entry.getKey(), filterAndOrderForUser(entry.getKey(), predict));
         }
     }
 
@@ -93,7 +85,7 @@ public class SlopeOneRecommender implements Recommender {
                 diff.get(j).put(i, oldValue / count);
             }
         }
-        printData(data);
+//        printData(data);
     }
 
     /**
@@ -114,10 +106,10 @@ public class SlopeOneRecommender implements Recommender {
             for (Book j : e.getValue().keySet()) {
                 for (Book k : diff.keySet()) {
                     try {
-                        double predictedValue = diff.get(k).get(j).doubleValue() + e.getValue().get(j).doubleValue();
-                        double finalValue = predictedValue * freq.get(k).get(j).intValue();
+                        double predictedValue = diff.get(k).get(j) + e.getValue().get(j);
+                        double finalValue = predictedValue * freq.get(k).get(j);
                         uPred.put(k, uPred.get(k) + finalValue);
-                        uFreq.put(k, uFreq.get(k) + freq.get(k).get(j).intValue());
+                        uFreq.put(k, uFreq.get(k) + freq.get(k).get(j));
                     } catch (NullPointerException e1) {
                     }
                 }
@@ -125,19 +117,19 @@ public class SlopeOneRecommender implements Recommender {
             HashMap<Book, Double> clean = new HashMap<>();
             for (Book j : uPred.keySet()) {
                 if (uFreq.get(j) > 0) {
-                    clean.put(j, uPred.get(j).doubleValue() / uFreq.get(j).intValue());
+                    clean.put(j, uPred.get(j) / uFreq.get(j));
                 }
             }
             for (Book j : bookDBDAO.getAllBooks()) {
                 if (e.getValue().containsKey(j)) {
                     clean.put(j, e.getValue().get(j));
                 } else if (!clean.containsKey(j)) {
-//                    clean.put(j, -1.0);
+                    clean.put(j, -1.0);
                 }
             }
             outputData.put(e.getKey(), clean);
         }
-        printData(outputData);
+//        printData(outputData);
 
         return outputData;
     }
@@ -145,7 +137,7 @@ public class SlopeOneRecommender implements Recommender {
     private static void printData(Map<Integer, HashMap<Book, Double>> data) {
         for (Integer userId : data.keySet()) {
             System.out.println(userId + ":");
-            print(data.get(userId));
+//            print(data.get(userId));
         }
     }
 

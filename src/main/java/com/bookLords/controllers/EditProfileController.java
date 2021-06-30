@@ -25,7 +25,7 @@ public class EditProfileController {
 	@Autowired
 	private UserProfileDAO userProfileDao;
 
-	private static final String UPLOAD_LOCATION = "C:\\profile_pics\\";
+	private static final String UPLOAD_LOCATION = "C:\\Users\\slavina_klisarska\\IdeaProjects\\BookLords\\src\\main\\webapp\\static\\images\\";
 
 	@RequestMapping(value = "/Edit", method = RequestMethod.GET)
 	public String search(@ModelAttribute("loggedUser") User loggedUser, Model model, HttpServletRequest request) {
@@ -80,7 +80,6 @@ public class EditProfileController {
 	public String singleFileUpload(ModelMap model, @ModelAttribute("loggedUser") User loggedUser, Model model1,
 			HttpServletRequest request, @RequestParam(value = "password1", required = false) String password) {
 		try {
-			System.out.println(password);
 			int id = loggedUser.getId();
 
 			userProfileDao.changePassword(password, id);

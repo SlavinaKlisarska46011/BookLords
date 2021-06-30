@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserRatingsDao {
@@ -23,8 +24,8 @@ public class UserRatingsDao {
 
     private Connection connection = DBConnection.getInstance().getConnection();
 
-    public Map<Integer, HashMap<Book, Double>> getAllUsersRatings() {
-        Map<Integer, HashMap<Book, Double>> result = new HashMap<>();
+    public synchronized ConcurrentHashMap<Integer, HashMap<Book, Double>> getAllUsersRatings() {
+        ConcurrentHashMap<Integer, HashMap<Book, Double>> result = new ConcurrentHashMap<>();
         try {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);

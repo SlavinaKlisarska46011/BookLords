@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.bookLords.model</OriginalElement>
+  <nodes>
+    <node x="0.0" y="732.0">com.bookLords.model.Book</node>
+    <node x="905.0" y="268.0">com.bookLords.model.Comment</node>
+    <node x="1801.4117647058822" y="999.0">com.bookLords.model.Quote</node>
+    <node x="266.0" y="732.0">com.bookLords.model.Author</node>
+    <node x="189.0" y="368.5">com.bookLords.model.daos</node>
+    <node x="333.0" y="279.0">com.bookLords.model.Bookshelf</node>
+    <node x="567.0" y="81.0">com.bookLords.model.User</node>
+    <node x="362.0" y="0.0">com.bookLords.model.interfaces</node>
+    <node x="511.0" y="732.0">com.bookLords.model.DBConnection</node>
+    <node x="960.0" y="732.0">com.bookLords.model.smartRecommendation</node>
+    <node x="0.0" y="1251.0">com.bookLords.model.exceptions</node>
+    <node x="0.0" y="334.0">com.bookLords.model.Rating</node>
+    <node x="207.0" y="1251.0">com.bookLords.model.validation</node>
+    <node x="753.0" y="732.0">com.bookLords.model.Genre</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.bookLords.model.Comment" target="com.bookLords.model.interfaces" relationship="REALIZATION">
+      <point x="0.0" y="-116.0" />
+      <point x="982.5" y="56.0" />
+      <point x="440.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.bookLords.model.daos" target="com.bookLords.model.interfaces" relationship="REALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="251.0" y="56.0" />
+      <point x="440.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.bookLords.model.Rating" target="com.bookLords.model.interfaces" relationship="REALIZATION">
+      <point x="0.0" y="-50.0" />
+      <point x="84.5" y="56.0" />
+      <point x="440.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.bookLords.model.User" target="com.bookLords.model.interfaces" relationship="REALIZATION">
+      <point x="5.6843418860808015E-14" y="-303.0" />
+      <point x="726.0" y="56.0" />
+      <point x="440.0" y="56.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.bookLords.model.Bookshelf" target="com.bookLords.model.interfaces" relationship="REALIZATION">
+      <point x="0.0" y="-105.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.40476190476190477" showDependencies="false" x="602.0" y="641.0" />
+  <SelectedNodes>
+    <node>com.bookLords.model.Book</node>
+    <node>com.bookLords.model.Comment</node>
+    <node>com.bookLords.model.Author</node>
+    <node>com.bookLords.model.daos</node>
+    <node>com.bookLords.model.Bookshelf</node>
+    <node>com.bookLords.model.User</node>
+    <node>com.bookLords.model.interfaces</node>
+    <node>com.bookLords.model.DBConnection</node>
+    <node>com.bookLords.model.smartRecommendation</node>
+    <node>com.bookLords.model.exceptions</node>
+    <node>com.bookLords.model.Rating</node>
+    <node>com.bookLords.model.validation</node>
+    <node>com.bookLords.model.Genre</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

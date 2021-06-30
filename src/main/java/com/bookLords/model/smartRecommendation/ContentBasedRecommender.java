@@ -2,31 +2,50 @@ package com.bookLords.model.smartRecommendation;
 
 import com.bookLords.model.*;
 import com.bookLords.model.daos.BookDBDAO;
+import com.bookLords.model.daos.UserProfileDAO;
+import com.bookLords.model.daos.UserRatingsDao;
 import com.bookLords.model.exceptions.BookException;
+import com.bookLords.model.exceptions.InvalidDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
-public class ContentBasedRecommender implements Recommender {
+public class ContentBasedRecommender extends Recommender {
 
     @Autowired
-    BookDBDAO bookDBDAO;
+    private BookDBDAO bookDBDAO;
+    @Autowired
+    private UserRatingsDao userRatingsDao;
+    @Autowired
+    private UserProfileDAO userProfileDao;
 
-    @Override
-    public List<Book> recommend(User user) throws BookException {
-        Map<String, Integer> allUserGenres = new HashMap<>();
-        Map<Author, Integer> allUserAuthors = new HashMap<>();
+    private static ConcurrentHashMap<Integer, HashMap<Book, Double>> inputData;
 
-        populate(user, allUserGenres, allUserAuthors);
-        String sortedFaveGenres = sortByValue(allUserGenres);
-        String sortedFaveAuthors = sortByValueAuthors(allUserAuthors);
+    @PostConstruct
+    public void init() throws BookException, SQLException, InvalidDataException {
+        inputData = userRatingsDao.getAllUsersRatings();
 
-        return bookDBDAO.getBooksByGenreAndAuthor(sortedFaveGenres, sortedFaveAuthors);
+        for (Map.Entry<Integer, HashMap<Book, Double>> entry : inputData.entrySet()) {
+            Map<String, Integer> allUserGenres = new HashMap<>();
+            Map<Author, Integer> allUserAuthors = new HashMap<>();
+            allUserAuthors.remove("none");
+            allUserGenres.remove("none");
+
+            Integer userId = entry.getKey();
+            populate(userProfileDao.getUserById(userId), allUserGenres, allUserAuthors);
+            String sortedFaveGenres = sortByValue(allUserGenres);
+            String sortedFaveAuthors = sortByValueAuthors(allUserAuthors);
+
+            addToCash(userId, bookDBDAO.getBooksByGenreAndAuthor(sortedFaveGenres, sortedFaveAuthors));
+
+        }
     }
-
 
     private void populate(User user, Map<String, Integer> favouriteGenres, Map<Author, Integer> favouriteAuthors) throws BookException {
         for (Map.Entry<Integer, Rating> bookIdRating : user.getRatings().entrySet()) {

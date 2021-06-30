@@ -34,7 +34,7 @@ public class ViewProfileController implements ILogin{
 					model.addAttribute("user", user);
 				}
 				return "viewProfile";
-			}else{
+			} else{
 				return "redirect:/Login";
 			}
 		} catch (Exception e) {

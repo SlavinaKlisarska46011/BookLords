@@ -245,27 +245,23 @@ public class BookDBDAO implements IBookDBDAO {
         List<Book> books = new ArrayList<>();
         try {
             if (genres != null && !genres.equals("")) {
-                if (!(genres.contains("\'") || genres.contains("\""))) {
+                if (!(genres.contains("'") || genres.contains("\""))) {
                     connection = DBConnection.getInstance().getConnection();
                     connection.setAutoCommit(false);
                     Statement statement = connection.createStatement();
                     ResultSet resultSet = statement
-                            .executeQuery("SELECT books.book_id FROM books " +
+                            .executeQuery("SELECT books.book_id, genres.genre_id  FROM books " +
                                     "JOIN books_has_authors ON books.book_id = books_has_authors.book_id " +
                                     "JOIN authors ON authors.author_id = books_has_authors.author_id " +
                                     "JOIN books_has_genres ON books.book_id = books_has_genres.books_book_id " +
                                     "JOIN genres ON genres.genre_id = books_has_genres.genres_genre_id " +
-                                    "where genres.name IN ('" + genres + "' and authors.name IN('" +authors + "';");
+                                    "where genres.name IN ('" + genres + "') or authors.name IN('" + authors + "');");
 
-                    if (resultSet.next()) {
-                        int genreId = resultSet.getInt("genre_id");
-                        resultSet = statement.executeQuery(
-                                "SELECT* FROM books_has_genres where genres_genre_id=\'" + genreId + "\';");
-                        while (resultSet.next()) {
-                            int bookId = resultSet.getInt("books_book_id");
-                            connection.commit();
-                            books.add(getBookByID(bookId));
-                        }
+                    while (resultSet.next()) {
+                        int genreId = resultSet.getInt("genres.genre_id");
+                        int bookId = resultSet.getInt("books.book_id");
+                        connection.commit();
+                        books.add(getBookByID(bookId));
                     }
                     return books;
                 }
@@ -278,7 +274,6 @@ public class BookDBDAO implements IBookDBDAO {
                 e1.printStackTrace();
                 throw new BookException("No books found!");
             }
-            throw new BookException("No books found!");
         } finally {
         }
         return books;
@@ -390,20 +385,20 @@ public class BookDBDAO implements IBookDBDAO {
     }
 
     public synchronized List<Book> getAllBooks() throws BookException {
-            try {
-                Statement statement = connection.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT book_id FROM books;");
-                List<Book> books = new ArrayList<>();
-                while (rs.next()) {
-                    int bookId = rs.getInt("book_id");
-                    books.add(getBookByID(bookId));
-                }
-                return books;
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BookException();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT book_id FROM books;");
+            List<Book> books = new ArrayList<>();
+            while (rs.next()) {
+                int bookId = rs.getInt("book_id");
+                books.add(getBookByID(bookId));
             }
+            return books;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BookException();
         }
+    }
 
 
 }

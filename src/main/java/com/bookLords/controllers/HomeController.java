@@ -39,8 +39,8 @@ public class HomeController implements ILogin {
     @RequestMapping(method = RequestMethod.GET)
     public String sayHello(Model model, HttpServletRequest request) {
         try {
-//            String quote = quotesDBDAO.getQuoteOfTheDay();
-//            model.addAttribute("quote", quote);
+            String quote = quotesDBDAO.getQuoteOfTheDay();
+            model.addAttribute("quote", quote);
             Map<Book, Double> books = new HashMap<>();
             User user = getCurrentUser(request);
             if (user != null) {

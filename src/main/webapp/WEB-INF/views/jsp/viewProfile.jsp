@@ -27,7 +27,7 @@
 						</tr>
 						<tr>
 							<td><img alt="Profile picture"
-								src='<c:url value="${user.profilePicture}"></c:url>' width="270"
+								src='images/<c:url value="${user.profilePicture}"></c:url>' width="270"
 								height="280"></td>
 							<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
 							<td>

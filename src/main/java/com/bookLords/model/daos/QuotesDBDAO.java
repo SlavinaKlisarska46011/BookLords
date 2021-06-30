@@ -15,7 +15,7 @@ public class QuotesDBDAO {
 	@Autowired
 	QuotesApiDAO quotesApiDAO;
 
-	private Connection connection = DBConnection.getInstance().getConnection();
+	private final Connection connection = DBConnection.getInstance().getConnection();
 
 	public String getQuoteOfTheDay() throws QuotesException {
 		try {

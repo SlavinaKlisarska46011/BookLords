@@ -162,7 +162,7 @@
 						</tr>
 						<tr>
 							<td><img alt="Profile picture" id="image"
-								src='<c:url value="${user.profilePicture}"></c:url>' width="200"
+								src='images/<c:url value="${user.profilePicture}"></c:url>' width="200"
 								height="210"></td>
 							<div>
 								<form:form method="POST" enctype="multipart/form-data"

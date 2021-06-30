@@ -33,8 +33,7 @@ public class UserProfileDAO implements IUserProfileDAO{
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				String activity = rs.getString("activity");
-				String profilePicture1 = rs.getString("profile_pic");
-				String profilePicture = "./profile_pics/" + profilePicture1;
+				String profilePicture = rs.getString("profile_pic");
 
 				return new User(userId, name, email, activity, profilePicture, getUserFollowers(userId),
 						getUserFollowingPeople(userId), bookshelvesDAO.getUserBookshelves(userId),
