@@ -70,6 +70,7 @@ public class ContentBasedRecommender extends Recommender {
     private static String sortByValue(Map<String, Integer> unsortedMap) {
         // Sorting the list based on values
         return unsortedMap.entrySet().stream()
+                .filter(books -> (!books.getKey().contains("\"") || !books.getKey().contains("\'")))
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(10)
                 .map(Map.Entry::getKey)

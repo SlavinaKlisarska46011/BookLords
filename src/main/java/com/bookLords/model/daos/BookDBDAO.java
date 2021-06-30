@@ -245,7 +245,6 @@ public class BookDBDAO implements IBookDBDAO {
         List<Book> books = new ArrayList<>();
         try {
             if (genres != null && !genres.equals("")) {
-                if (!(genres.contains("'") || genres.contains("\""))) {
                     connection = DBConnection.getInstance().getConnection();
                     connection.setAutoCommit(false);
                     Statement statement = connection.createStatement();
@@ -264,7 +263,6 @@ public class BookDBDAO implements IBookDBDAO {
                         books.add(getBookByID(bookId));
                     }
                     return books;
-                }
             }
         } catch (SQLException | BookException e) {
             e.printStackTrace();
